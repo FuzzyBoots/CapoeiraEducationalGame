@@ -3,28 +3,43 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(RectTransform))]
 public class PuzzleScript : MonoBehaviour
 {
+    [SerializeField] GameObject _puzzleSlot;
+    [SerializeField] Sprite _puzzleSprite;
+
+    RectTransform _puzzleRectTransform;
+
     private void Start()
     {
-        SegmentAndPlace(GetComponent<Image>(), 10, 10);
+        _puzzleRectTransform = GetComponent<RectTransform>();
+        SegmentAndPlace(_puzzleSprite, 8, 4);
     }
 
-    public void SegmentAndPlace(Image wholeImage, int x, int y)
+    public void SegmentAndPlace(Sprite puzzleImage, int x, int y)
     {
-        if (wholeImage == null) return;
+        Transform parent = transform;
+        Texture2D texture = puzzleImage.texture;
 
-        Transform parent = wholeImage.transform.parent;
-        Texture2D texture = wholeImage.sprite.texture;
-
-        Vector3 position = wholeImage.GetComponent<RectTransform>().localPosition;
-        Vector3 dimensions = wholeImage.GetComponent<RectTransform>().sizeDelta;
-        Debug.Log($"{position} - {dimensions}");
+        Vector3 position = _puzzleRectTransform.localPosition;
+        Vector3 dimensions = _puzzleRectTransform.sizeDelta;
 
         float sliceX = texture.width / x;
         float sliceY = texture.height / y;
+
+        GameObject slots = new GameObject();
+        slots.name = "Slots";
+        GameObject pieces = new GameObject();
+        pieces.name = "Pieces";
+        
+        slots.transform.parent = parent;
+        slots.transform.localPosition = Vector3.zero;
+        pieces.transform.parent = parent;
+        pieces.transform.localPosition = Vector3.zero;
 
         for (int h = 0; h < x; h++)
         {
@@ -32,20 +47,32 @@ public class PuzzleScript : MonoBehaviour
             {
                 GameObject newGameObject = new GameObject();
                 newGameObject.name = $"Slice {h} {v}";
-                newGameObject.transform.parent = parent;
+                newGameObject.transform.parent = pieces.transform;
                 Image image = newGameObject.AddComponent<Image>();
+                DraggablePuzzlePiece piece = newGameObject.AddComponent<DraggablePuzzlePiece>();
+                piece.SetHV(h, v);
 
                 Rect rect = new Rect(h * sliceX, v * sliceY, sliceX, sliceY);
 
                 Sprite newSprite = Sprite.Create(texture, rect, Vector2.one / 2f);
                 newSprite.name = $"Sprite {h} {v}";
                 image.sprite = newSprite;
+                
                 RectTransform rectTransform = newGameObject.GetComponent<RectTransform>();
-                rectTransform.localPosition = position + new Vector3(h * dimensions.x / x - dimensions.x / 2f, v * dimensions.y / y - dimensions.x / 2f, 0);
+                rectTransform.localPosition = position + new Vector3(Random.Range(0, dimensions.x), Random.Range(0, dimensions.y), 0);
+                rectTransform.sizeDelta = new Vector3(dimensions.x / x, dimensions.y / y, 1);
+
+                GameObject newPuzzleSlot = Instantiate(_puzzleSlot);
+                newPuzzleSlot.name = $"Slot {h} {v}";
+                newPuzzleSlot.transform.parent = slots.transform;
+                
+                PuzzleSlot slot = newPuzzleSlot.AddComponent<PuzzleSlot>();
+                slot.SetHV(h, v);
+
+                rectTransform = newPuzzleSlot.GetComponent<RectTransform>();
+                rectTransform.localPosition = position + new Vector3((h-1.5f) * dimensions.x / x, (v - 1.5f) * dimensions.y / y, 0);
                 rectTransform.sizeDelta = new Vector3(dimensions.x / x, dimensions.y / y, 1);
             }
         }
-
-        wholeImage.enabled = false;
     }
 }
