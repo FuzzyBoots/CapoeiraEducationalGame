@@ -416,7 +416,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _puzzleSlot: {fileID: 8234341899026311426, guid: aa0a7041163696744becb8003c7e7f8a, type: 3}
-  _puzzleSprite: {fileID: 21300000, guid: 35603f0630394554f9f160018084da97, type: 3}
+  _puzzleSprite: {fileID: 21300000, guid: 6d60e72e6d1a4ca45a63fdb8f4316908, type: 3}
+  _horizontalPieces: 3
+  _verticalPieces: 3
 --- !u!1 &1815921174
 GameObject:
   m_ObjectHideFlags: 0

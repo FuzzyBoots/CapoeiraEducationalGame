@@ -52,10 +52,4 @@ public class DraggablePuzzlePiece : MonoBehaviour, IDragHandler, IBeginDragHandl
     {
         _image = GetComponent<Image>();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

@@ -24,11 +24,11 @@ public class PuzzleSlot : MonoBehaviour, IDropHandler
             {
                 // Locked in
                 Debug.Log("Match");
+                // Eventually, we'll want to communicate this
+                // Should we then disable the puzzle piece?
+
+                piece.SetPosition(GetComponent<RectTransform>().localPosition);
             }
-
-            piece.SetPosition(GetComponent<RectTransform>().localPosition);
-        }
-
-        
+        }        
     }
 }

@@ -12,12 +12,15 @@ public class PuzzleScript : MonoBehaviour
     [SerializeField] GameObject _puzzleSlot;
     [SerializeField] Sprite _puzzleSprite;
 
+    [SerializeField, Range(1, 10)] int _horizontalPieces = 3;
+    [SerializeField, Range(1, 10)] int _verticalPieces = 3;
+
     RectTransform _puzzleRectTransform;
 
     private void Start()
     {
         _puzzleRectTransform = GetComponent<RectTransform>();
-        SegmentAndPlace(_puzzleSprite, 8, 4);
+        SegmentAndPlace(_puzzleSprite, _horizontalPieces, _verticalPieces);
     }
 
     public void SegmentAndPlace(Sprite puzzleImage, int x, int y)
@@ -70,7 +73,7 @@ public class PuzzleScript : MonoBehaviour
                 slot.SetHV(h, v);
 
                 rectTransform = newPuzzleSlot.GetComponent<RectTransform>();
-                rectTransform.localPosition = position + new Vector3((h-1.5f) * dimensions.x / x, (v - 1.5f) * dimensions.y / y, 0);
+                rectTransform.localPosition = position + new Vector3((h+0.5f) * dimensions.x / x - dimensions.x / 2, (v + 0.5f) * dimensions.y / y - dimensions.y/2, 0);
                 rectTransform.sizeDelta = new Vector3(dimensions.x / x, dimensions.y / y, 1);
             }
         }
