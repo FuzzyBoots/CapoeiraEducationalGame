@@ -168,7 +168,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5445271113457937872, guid: db4689c62f2c0e4409dfdbd527ae83eb, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 36
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5445271113457937872, guid: db4689c62f2c0e4409dfdbd527ae83eb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -486,6 +486,83 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5445271113457937872, guid: db4689c62f2c0e4409dfdbd527ae83eb, type: 3}
   m_PrefabInstance: {fileID: 1742600702}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &561151438
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 561151440}
+  - component: {fileID: 561151439}
+  m_Layer: 0
+  m_Name: QuizManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &561151439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 561151438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d58baff4dd08a743857bf7efce505a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _questions:
+  - _question: Who is the founder of Capoeira Angola?
+    _answers:
+    - Mestre Pastinha
+    - Mestre Doutor
+    - Mestre Errado
+    - Mestre Bimba
+  - _question: Who is the founder of Capoeira Regional?
+    _answers:
+    - Mestre Bimba
+    - "Mestre Jo\xE3o Grande"
+    - Mestre Ferradura
+    - Mestre Pastinha
+  - _question: Which is not one of the accepted explanations for where Capoeira got
+      its name?
+    _answers:
+    - From leather caps traditionally worn by slaves
+    - "From \"cap\xE3o\", meaning a castrated rooster"
+    - From "capa", baskets worn by slaves on their heads
+    - "From \"kaa pu\xE9ra\", meaning \"formerly a forest\""
+  - _question: What did Mestre Bimba say were the proper set of isntruments for a
+      bateria?
+    _answers:
+    - A berimbau and two pandeiros
+    - Three berimbaus, pandeiro, atabaque, and heca-heca
+    - A guitar and a snare set
+    - Only singing and clapping
+  - _question: When was Capoeira made legal again?
+    _answers:
+    - 1940
+    - 1706
+    - 1843
+    - 1927
+--- !u!4 &561151440
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 561151438}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &753437021
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -532,7 +609,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5445271113457937872, guid: db4689c62f2c0e4409dfdbd527ae83eb, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 36
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5445271113457937872, guid: db4689c62f2c0e4409dfdbd527ae83eb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -802,7 +879,7 @@ MonoBehaviour:
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
-  m_ChildControlHeight: 0
+  m_ChildControlHeight: 1
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
@@ -857,7 +934,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5445271113457937872, guid: db4689c62f2c0e4409dfdbd527ae83eb, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 36
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5445271113457937872, guid: db4689c62f2c0e4409dfdbd527ae83eb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -958,7 +1035,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5445271113457937872, guid: db4689c62f2c0e4409dfdbd527ae83eb, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 36
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5445271113457937872, guid: db4689c62f2c0e4409dfdbd527ae83eb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1535,3 +1612,4 @@ SceneRoots:
   m_Roots:
   - {fileID: 226785727}
   - {fileID: 3715977080329820958}
+  - {fileID: 561151440}
