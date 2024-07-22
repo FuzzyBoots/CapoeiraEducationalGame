@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class QuizManager : MonoBehaviour
@@ -15,7 +16,34 @@ public class QuizManager : MonoBehaviour
 
     [SerializeField] private QuestionEntry[] _questions;
 
-    [SerializeField] List<QuestionEntry> _curQuestions;
+    List<QuestionEntry> _curQuestions;
+    IEnumerator _questionIter;
+
+    [SerializeField] TMP_Text _questionField;
+
+    [SerializeField] GameObject _answerField;
+
+    [SerializeField] GameObject _answerPrefab;
+
+    public static QuizManager Instance
+    {
+        get;
+        private set;
+    }
+
+    private void Awake()
+    {
+        // If there is an instance, and it's not me, delete myself.
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
+
 
     // Start is called before the first frame update
     void Start()
@@ -26,12 +54,63 @@ public class QuizManager : MonoBehaviour
 
     private void LoadQuizQuestions()
     {
+        _curQuestions = new List<QuestionEntry>(_questions);
+        _questionIter = _curQuestions.GetEnumerator();
+
+        LoadNextQuestion();
+    }
+
+    private void DisplayQuestion(QuestionEntry question)
+    {
+        _questionField.text = question._question;
+
+        List<GameObject> answers = new List<GameObject> ();
+
+        foreach (string answer in question._answers)
+        {
+            GameObject answerObject = Instantiate(_answerPrefab);
+            answers.Add (answerObject);
+        }
+    }
+
+    internal void HandleCorrectAnswer()
+    {
+        Debug.Log("Correct!");
+        if (!LoadNextQuestion())
+        {
+            HandleQuizCompletion();
+        }
+    }
+
+    private bool LoadNextQuestion()
+    {
+        bool hasNext = _questionIter.MoveNext();
+
+        return hasNext;
+    }
+
+    public float UpdateQuestionAnswerCount(string playerProfileName, int _questions, int _correctAnswers)
+    {
+        int totalQuestions = PlayerPrefs.GetInt(playerProfileName + "totalQuestions");
+        int totalAnsweredRight= PlayerPrefs.GetInt(playerProfileName + "totalAnsweredRight");
+
+        totalQuestions += _questions;
+        totalAnsweredRight += _correctAnswers;
+
+        return totalAnsweredRight / totalQuestions;
+    }
+
+    private void HandleQuizCompletion()
+    {
         throw new NotImplementedException();
     }
 
-    // Update is called once per frame
-    void Update()
+    internal void HandleIncorrectAnswer()
     {
-        
+        Debug.Log("Incorrect!");
+        if (!LoadNextQuestion())
+        {
+            HandleQuizCompletion();
+        }
     }
 }
