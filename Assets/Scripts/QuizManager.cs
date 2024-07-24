@@ -17,7 +17,7 @@ public class QuizManager : MonoBehaviour
     [SerializeField] private QuestionEntry[] _questions;
 
     List<QuestionEntry> _curQuestions;
-    IEnumerator _questionIter;
+    IEnumerator<QuestionEntry> _questionIter;
 
     [SerializeField] TMP_Text _questionField;
 
@@ -68,8 +68,31 @@ public class QuizManager : MonoBehaviour
 
         foreach (string answer in question._answers)
         {
+            Debug.Log($"Adding {answer}");
             GameObject answerObject = Instantiate(_answerPrefab);
+            QuizAnswer quizAnswer = answerObject.GetComponent<QuizAnswer>();
+            quizAnswer.SetText(answer);
             answers.Add (answerObject);
+        }
+
+        if (answers.Count > 0)
+        {
+            answers[0].GetComponent<QuizAnswer>().SetCorrectAnswer(true);
+
+            // Shuffle them
+            for (int i = answers.Count - 1; i> 0 ; i--)
+            {
+                int randIndex = UnityEngine.Random.Range(0, answers.Count);
+
+                GameObject swap = answers[i];
+                answers[i] = answers[randIndex];
+                answers[randIndex] = swap;
+            }
+
+            foreach (GameObject answer in answers)
+            {
+                answer.transform.SetParent(_answerField.transform);
+            }
         }
     }
 
@@ -85,6 +108,7 @@ public class QuizManager : MonoBehaviour
     private bool LoadNextQuestion()
     {
         bool hasNext = _questionIter.MoveNext();
+        DisplayQuestion(_questionIter.Current);
 
         return hasNext;
     }

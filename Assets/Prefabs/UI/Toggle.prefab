@@ -295,7 +295,19 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7582997943690996053}
+        m_TargetAssemblyTypeName: QuizAnswer, Assembly-CSharp
+        m_MethodName: HandleClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
 --- !u!114 &7582997943690996053
 MonoBehaviour:
@@ -309,6 +321,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52b08263e66f15c4cabf6c1030b4766c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isCorrectAnswer: 0
+  _text: {fileID: 8951642199736965970}
 --- !u!1 &8107347022067217172
 GameObject:
   m_ObjectHideFlags: 0
