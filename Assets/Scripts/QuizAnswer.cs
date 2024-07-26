@@ -21,13 +21,7 @@ public class QuizAnswer : MonoBehaviour
 
     public void HandleClick()
     {
-        if (_isCorrectAnswer)
-        {
-            QuizManager.Instance.HandleCorrectAnswer();
-        } else
-        {
-            QuizManager.Instance.HandleIncorrectAnswer();
-        }
+        QuizManager.Instance.HandleAnswer(_isCorrectAnswer);
     }
 
     public void SetText(string text)

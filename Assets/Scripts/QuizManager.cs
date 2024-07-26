@@ -45,7 +45,6 @@ public class QuizManager : MonoBehaviour
     }
 
 
-    // Start is called before the first frame update
     void Start()
     {
         // Start up quiz
@@ -55,9 +54,19 @@ public class QuizManager : MonoBehaviour
     private void LoadQuizQuestions()
     {
         _curQuestions = new List<QuestionEntry>(_questions);
+        // We should shuffle those questions
+
         _questionIter = _curQuestions.GetEnumerator();
 
         LoadNextQuestion();
+    }
+
+    private bool LoadNextQuestion()
+    {
+        bool hasNext = _questionIter.MoveNext();
+        DisplayQuestion(_questionIter.Current);
+
+        return hasNext;
     }
 
     private void DisplayQuestion(QuestionEntry question)
@@ -66,9 +75,14 @@ public class QuizManager : MonoBehaviour
 
         List<GameObject> answers = new List<GameObject> ();
 
+        // Clear the answer field
+        while (_answerField.transform.childCount > 0)
+        {
+            DestroyImmediate(_answerField.transform.GetChild(0).gameObject);
+        }
+
         foreach (string answer in question._answers)
         {
-            Debug.Log($"Adding {answer}");
             GameObject answerObject = Instantiate(_answerPrefab);
             QuizAnswer quizAnswer = answerObject.GetComponent<QuizAnswer>();
             quizAnswer.SetText(answer);
@@ -96,21 +110,20 @@ public class QuizManager : MonoBehaviour
         }
     }
 
-    internal void HandleCorrectAnswer()
+    internal void HandleAnswer(bool isCorrect)
     {
-        Debug.Log("Correct!");
+        if (isCorrect)
+        {
+            Debug.Log("Correct!");
+        } else
+        {
+            Debug.Log("Incorrect!");
+        }
+
         if (!LoadNextQuestion())
         {
             HandleQuizCompletion();
         }
-    }
-
-    private bool LoadNextQuestion()
-    {
-        bool hasNext = _questionIter.MoveNext();
-        DisplayQuestion(_questionIter.Current);
-
-        return hasNext;
     }
 
     public float UpdateQuestionAnswerCount(string playerProfileName, int _questions, int _correctAnswers)
