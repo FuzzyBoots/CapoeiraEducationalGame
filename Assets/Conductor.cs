@@ -39,9 +39,12 @@ public class Conductor : MonoBehaviour
         _musicSource.Play();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        //determine how many seconds since the song started
+        _songPosition = (float)(AudioSettings.dspTime - _dspSongTime);
+
+        //determine how many beats since the song started
+        _songPositionInBeats = _songPosition / _secPerBeat;
     }
 }
