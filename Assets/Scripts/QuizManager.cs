@@ -17,7 +17,7 @@ public class QuizManager : MonoBehaviour
     [SerializeField] private QuestionEntry[] _questions;
 
     List<QuestionEntry> _curQuestions;
-    IEnumerator _questionIter;
+    IEnumerator<QuestionEntry> _questionIter;
 
     [SerializeField] TMP_Text _questionField;
 
@@ -45,7 +45,6 @@ public class QuizManager : MonoBehaviour
     }
 
 
-    // Start is called before the first frame update
     void Start()
     {
         // Start up quiz
@@ -55,9 +54,19 @@ public class QuizManager : MonoBehaviour
     private void LoadQuizQuestions()
     {
         _curQuestions = new List<QuestionEntry>(_questions);
+        // We should shuffle those questions
+
         _questionIter = _curQuestions.GetEnumerator();
 
         LoadNextQuestion();
+    }
+
+    private bool LoadNextQuestion()
+    {
+        bool hasNext = _questionIter.MoveNext();
+        DisplayQuestion(_questionIter.Current);
+
+        return hasNext;
     }
 
     private void DisplayQuestion(QuestionEntry question)
@@ -66,27 +75,55 @@ public class QuizManager : MonoBehaviour
 
         List<GameObject> answers = new List<GameObject> ();
 
+        // Clear the answer field
+        while (_answerField.transform.childCount > 0)
+        {
+            DestroyImmediate(_answerField.transform.GetChild(0).gameObject);
+        }
+
         foreach (string answer in question._answers)
         {
             GameObject answerObject = Instantiate(_answerPrefab);
+            QuizAnswer quizAnswer = answerObject.GetComponent<QuizAnswer>();
+            quizAnswer.SetText(answer);
             answers.Add (answerObject);
+        }
+
+        if (answers.Count > 0)
+        {
+            answers[0].GetComponent<QuizAnswer>().SetCorrectAnswer(true);
+
+            // Shuffle them
+            for (int i = answers.Count - 1; i> 0 ; i--)
+            {
+                int randIndex = UnityEngine.Random.Range(0, answers.Count);
+
+                GameObject swap = answers[i];
+                answers[i] = answers[randIndex];
+                answers[randIndex] = swap;
+            }
+
+            foreach (GameObject answer in answers)
+            {
+                answer.transform.SetParent(_answerField.transform);
+            }
         }
     }
 
-    internal void HandleCorrectAnswer()
+    internal void HandleAnswer(bool isCorrect)
     {
-        Debug.Log("Correct!");
+        if (isCorrect)
+        {
+            Debug.Log("Correct!");
+        } else
+        {
+            Debug.Log("Incorrect!");
+        }
+
         if (!LoadNextQuestion())
         {
             HandleQuizCompletion();
         }
-    }
-
-    private bool LoadNextQuestion()
-    {
-        bool hasNext = _questionIter.MoveNext();
-
-        return hasNext;
     }
 
     public float UpdateQuestionAnswerCount(string playerProfileName, int _questions, int _correctAnswers)
