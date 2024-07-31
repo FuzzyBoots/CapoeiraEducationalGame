@@ -6,18 +6,10 @@ using UnityEngine;
 
 public class QuizManager : MonoBehaviour
 {
-    [System.Serializable]
-    public class QuestionEntry
-    {
-        [Multiline] public string _question;
-        // First entry will be the correct one. They'll get shuffled on display
-        public string[] _answers;
-    }
+    [SerializeField] private QuizQuestion[] _questions;
 
-    [SerializeField] private QuestionEntry[] _questions;
-
-    List<QuestionEntry> _curQuestions;
-    IEnumerator<QuestionEntry> _questionIter;
+    List<QuizQuestion> _curQuestions;
+    IEnumerator<QuizQuestion> _questionIter;
 
     [SerializeField] TMP_Text _questionField;
 
@@ -53,7 +45,7 @@ public class QuizManager : MonoBehaviour
 
     private void LoadQuizQuestions()
     {
-        _curQuestions = new List<QuestionEntry>(_questions);
+        _curQuestions = new List<QuizQuestion>(_questions);
         // We should shuffle those questions
 
         _questionIter = _curQuestions.GetEnumerator();
@@ -69,9 +61,9 @@ public class QuizManager : MonoBehaviour
         return hasNext;
     }
 
-    private void DisplayQuestion(QuestionEntry question)
+    private void DisplayQuestion(QuizQuestion question)
     {
-        _questionField.text = question._question;
+        _questionField.text = question.Question;
 
         List<GameObject> answers = new List<GameObject> ();
 
@@ -81,7 +73,7 @@ public class QuizManager : MonoBehaviour
             DestroyImmediate(_answerField.transform.GetChild(0).gameObject);
         }
 
-        foreach (string answer in question._answers)
+        foreach (string answer in question.Answers)
         {
             GameObject answerObject = Instantiate(_answerPrefab);
             QuizAnswer quizAnswer = answerObject.GetComponent<QuizAnswer>();
