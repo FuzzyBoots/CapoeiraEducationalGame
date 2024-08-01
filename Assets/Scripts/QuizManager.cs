@@ -1,12 +1,14 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
 public class QuizManager : MonoBehaviour
 {
-    [SerializeField] private QuizQuestion[] _questions;
+    [SerializeField] List<QuizQuestion> _questions;
 
     List<QuizQuestion> _curQuestions;
     IEnumerator<QuizQuestion> _questionIter;
@@ -16,6 +18,13 @@ public class QuizManager : MonoBehaviour
     [SerializeField] GameObject _answerField;
 
     [SerializeField] GameObject _answerPrefab;
+
+    [SerializeField] TMP_Text _winText, _loseText;
+    
+    private int _correctAnswers = 0;
+    private int _questionsPosed = 0;
+    
+    [SerializeField] private int _questionCount = 5;
 
     public static QuizManager Instance
     {
@@ -43,22 +52,43 @@ public class QuizManager : MonoBehaviour
         LoadQuizQuestions();
     }
 
+    private void ShuffleList<T>(List<T> list, int numberOfShuffles = -1)
+    {
+        if (numberOfShuffles < 0)
+        {
+            numberOfShuffles = list.Count;
+        }
+        for (int i = numberOfShuffles - 1; i > 0; i--)
+        {
+            int randIndex = UnityEngine.Random.Range(0, list.Count);
+
+            T swap = list[i];
+            list[i] = list[randIndex];
+            list[randIndex] = swap;
+        }
+    }
+
     private void LoadQuizQuestions()
     {
         _curQuestions = new List<QuizQuestion>(_questions);
-        // We should shuffle those questions
-
-        _questionIter = _curQuestions.GetEnumerator();
+        ShuffleList<QuizQuestion>(_questions, _questionCount);
+        _questionIter = _questions.Take(this._questionCount).GetEnumerator();
 
         LoadNextQuestion();
     }
 
-    private bool LoadNextQuestion()
+    private void LoadNextQuestion()
     {
         bool hasNext = _questionIter.MoveNext();
-        DisplayQuestion(_questionIter.Current);
-
-        return hasNext;
+        
+        if (hasNext)
+        {
+            DisplayQuestion(_questionIter.Current);
+            _questionsPosed++;
+        } else
+        {
+            HandleQuizCompletion();
+        }
     }
 
     private void DisplayQuestion(QuizQuestion question)
@@ -86,14 +116,7 @@ public class QuizManager : MonoBehaviour
             answers[0].GetComponent<QuizAnswer>().SetCorrectAnswer(true);
 
             // Shuffle them
-            for (int i = answers.Count - 1; i> 0 ; i--)
-            {
-                int randIndex = UnityEngine.Random.Range(0, answers.Count);
-
-                GameObject swap = answers[i];
-                answers[i] = answers[randIndex];
-                answers[randIndex] = swap;
-            }
+            ShuffleList(answers);
 
             foreach (GameObject answer in answers)
             {
@@ -106,16 +129,34 @@ public class QuizManager : MonoBehaviour
     {
         if (isCorrect)
         {
-            Debug.Log("Correct!");
+            ShowWinText();
         } else
         {
-            Debug.Log("Incorrect!");
+            ShowLoseText();
         }
+    }
 
-        if (!LoadNextQuestion())
-        {
-            HandleQuizCompletion();
-        }
+    void ShowWinText()
+    {
+        _winText.gameObject.SetActive(true);
+        Sequence winSequence = DOTween.Sequence();
+        winSequence.Append(_winText.transform.DOScale(1, 1f));
+        winSequence.AppendInterval(0.5f);
+        winSequence.Append(_winText.transform.DOScale(0, 1f));
+        winSequence.AppendCallback(() => { _winText.gameObject.SetActive(false); LoadNextQuestion(); });
+
+        // Increment score
+        _correctAnswers++;
+    }
+
+    void ShowLoseText()
+    {
+        _loseText.gameObject.SetActive(true);
+        Sequence loseSequence = DOTween.Sequence();
+        loseSequence.Append(_loseText.transform.DOScale(1, 1f));
+        loseSequence.AppendInterval(0.5f);
+        loseSequence.Append(_loseText.transform.DOScale(0, 1f));
+        loseSequence.AppendCallback(() => { _winText.gameObject.SetActive(false); LoadNextQuestion(); });
     }
 
     public float UpdateQuestionAnswerCount(string playerProfileName, int _questions, int _correctAnswers)
@@ -131,15 +172,7 @@ public class QuizManager : MonoBehaviour
 
     private void HandleQuizCompletion()
     {
-        throw new NotImplementedException();
-    }
-
-    internal void HandleIncorrectAnswer()
-    {
-        Debug.Log("Incorrect!");
-        if (!LoadNextQuestion())
-        {
-            HandleQuizCompletion();
-        }
+        // Display Results screen
+        // That screen should provide a method to go back to the main screen (or the game choice screen?)
     }
 }
