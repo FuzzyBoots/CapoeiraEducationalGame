@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class QuizManager : MonoBehaviour
 {
@@ -20,9 +21,10 @@ public class QuizManager : MonoBehaviour
     [SerializeField] GameObject _answerPrefab;
 
     [SerializeField] TMP_Text _winText, _loseText;
+
+    [SerializeField] ScoreHolder _scoreHolder;
     
     private int _correctAnswers = 0;
-    private int _questionsPosed = 0;
     
     [SerializeField] private int _questionCount = 5;
 
@@ -58,9 +60,10 @@ public class QuizManager : MonoBehaviour
         {
             numberOfShuffles = list.Count;
         }
+
         for (int i = numberOfShuffles - 1; i > 0; i--)
         {
-            int randIndex = UnityEngine.Random.Range(0, list.Count);
+            int randIndex = UnityEngine.Random.Range(0, i-1);
 
             T swap = list[i];
             list[i] = list[randIndex];
@@ -70,6 +73,10 @@ public class QuizManager : MonoBehaviour
 
     private void LoadQuizQuestions()
     {
+        _scoreHolder.totalQuestions = 0;
+        _scoreHolder.correctAnswers = 0;
+        _scoreHolder.currentGame = SceneManager.GetActiveScene();
+
         _curQuestions = new List<QuizQuestion>(_questions);
         ShuffleList<QuizQuestion>(_questions, _questionCount);
         _questionIter = _questions.Take(this._questionCount).GetEnumerator();
@@ -84,7 +91,7 @@ public class QuizManager : MonoBehaviour
         if (hasNext)
         {
             DisplayQuestion(_questionIter.Current);
-            _questionsPosed++;
+            _scoreHolder.totalQuestions++;
         } else
         {
             HandleQuizCompletion();
@@ -130,6 +137,9 @@ public class QuizManager : MonoBehaviour
         if (isCorrect)
         {
             ShowWinText();
+
+            // Increment score
+            _scoreHolder.correctAnswers++;
         } else
         {
             ShowLoseText();
@@ -144,9 +154,6 @@ public class QuizManager : MonoBehaviour
         winSequence.AppendInterval(0.5f);
         winSequence.Append(_winText.transform.DOScale(0, 1f));
         winSequence.AppendCallback(() => { _winText.gameObject.SetActive(false); LoadNextQuestion(); });
-
-        // Increment score
-        _correctAnswers++;
     }
 
     void ShowLoseText()
@@ -173,6 +180,7 @@ public class QuizManager : MonoBehaviour
     private void HandleQuizCompletion()
     {
         // Display Results screen
+        SceneManager.LoadScene("Results Screen");
         // That screen should provide a method to go back to the main screen (or the game choice screen?)
     }
 }

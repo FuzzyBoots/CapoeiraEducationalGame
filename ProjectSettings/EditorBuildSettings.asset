@@ -6,6 +6,30 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/BerimbauGame.unity
+    guid: 21305f504f9f8a14d84df4829e2d31fc
+  - enabled: 1
+    path: Assets/Scenes/ChooseGameScreen.unity
+    guid: 1e9ecbf75f1cf0a43850e6adfa181680
+  - enabled: 1
+    path: Assets/Scenes/MoveMatchGame.unity
+    guid: fb61b7cd88fa6ed44960ef37cd5f6e77
+  - enabled: 1
+    path: Assets/Scenes/ProfilesScreen.unity
+    guid: 34141315be60bd94899bcd031cddeb05
+  - enabled: 1
+    path: Assets/Scenes/PuzzleScreen.unity
+    guid: 36c39ffa853c3e444a2a0c03721d34f5
+  - enabled: 1
+    path: Assets/Scenes/SettingsScreen.unity
+    guid: 103ee739c56524a43a20fe6c5d34c7f8
+  - enabled: 1
     path: Assets/Scenes/TitleScreen.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 1
+    path: Assets/Scenes/CapoeiraHistoryGame.unity
+    guid: 3893e149c0d3e6246876c03ecc8d7350
+  - enabled: 1
+    path: Assets/Scenes/Results Screen.unity
+    guid: 8db85ab4eac218f4e8b1c5f485d04408
   m_configObjects: {}
