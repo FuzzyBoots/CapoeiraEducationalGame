@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -53,23 +54,7 @@ public class QuizManager : MonoBehaviour
         // Start up quiz
         LoadQuizQuestions();
     }
-
-    private void ShuffleList<T>(List<T> list, int numberOfShuffles = -1)
-    {
-        if (numberOfShuffles < 0)
-        {
-            numberOfShuffles = list.Count;
-        }
-
-        for (int i = numberOfShuffles - 1; i > 0; i--)
-        {
-            int randIndex = UnityEngine.Random.Range(0, i-1);
-
-            T swap = list[i];
-            list[i] = list[randIndex];
-            list[randIndex] = swap;
-        }
-    }
+        
 
     private void LoadQuizQuestions()
     {
@@ -78,7 +63,7 @@ public class QuizManager : MonoBehaviour
         _scoreHolder.currentGame = SceneManager.GetActiveScene();
 
         _curQuestions = new List<QuizQuestion>(_questions);
-        ShuffleList<QuizQuestion>(_questions, _questionCount);
+        UtilityFunctions.ShuffleList<QuizQuestion>(_questions, _questionCount);
         _questionIter = _questions.Take(this._questionCount).GetEnumerator();
 
         LoadNextQuestion();
@@ -123,7 +108,7 @@ public class QuizManager : MonoBehaviour
             answers[0].GetComponent<QuizAnswer>().SetCorrectAnswer(true);
 
             // Shuffle them
-            ShuffleList(answers);
+            UtilityFunctions.ShuffleList(answers);
 
             foreach (GameObject answer in answers)
             {
