@@ -12,7 +12,6 @@ public class QuizManager : MonoBehaviour
 {
     [SerializeField] List<QuizQuestion> _questions;
 
-    List<QuizQuestion> _curQuestions;
     IEnumerator<QuizQuestion> _questionIter;
 
     [SerializeField] TMP_Text _questionField;
@@ -24,8 +23,6 @@ public class QuizManager : MonoBehaviour
     [SerializeField] TMP_Text _winText, _loseText;
 
     [SerializeField] ScoreHolder _scoreHolder;
-    
-    private int _correctAnswers = 0;
     
     [SerializeField] private int _questionCount = 5;
 
@@ -62,7 +59,6 @@ public class QuizManager : MonoBehaviour
         _scoreHolder.correctAnswers = 0;
         _scoreHolder.currentGame = SceneManager.GetActiveScene();
 
-        _curQuestions = new List<QuizQuestion>(_questions);
         UtilityFunctions.ShuffleList<QuizQuestion>(_questions, _questionCount);
         _questionIter = _questions.Take(this._questionCount).GetEnumerator();
 
