@@ -1,12 +1,17 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using TMPro;
 using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Playables;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class MovementQuizManager : MonoBehaviour
@@ -22,14 +27,46 @@ public class MovementQuizManager : MonoBehaviour
     [SerializeField] int _randomNameCount = 5;
 
     [SerializeField] ScoreHolder _scoreHolder;
+
+    [SerializeField] TMP_Text _movesText;
+    [SerializeField] TMP_InputField _moveField;
+    [SerializeField] TMP_Text _winText, _loseText;
+
     private string _correctName;
+
+
+
+    public static MovementQuizManager Instance
+    {
+        get;
+        private set;
+    }
+
+    private void Awake()
+    {
+        // If there is an instance, and it's not me, delete myself.
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
     {
+        Assert.IsNotNull(_scoreHolder);
+        Assert.IsNotNull(_movesText);
+        Assert.IsNotNull(_animator);
+        Assert.IsNotNull(_controller);
+        Assert.IsNotNull(_moveField);
+
         // BuildAnimationGraph();
 
-        // Pick 10 random ones.
+        // Pick 10 random moves.
         UtilityFunctions.ShuffleList(_moveEntries, _movementCount);
 
         // Get the unique movement names
@@ -37,6 +74,10 @@ public class MovementQuizManager : MonoBehaviour
 
         // Set up play
         _moveIter = _moveEntries.Take(_movementCount).GetEnumerator();
+
+        _scoreHolder.totalQuestions = 0;
+        _scoreHolder.correctAnswers = 0;
+        _scoreHolder.currentGame = SceneManager.GetActiveScene();
 
         LoadNextMovement();
     }
@@ -77,10 +118,47 @@ public class MovementQuizManager : MonoBehaviour
             HandleQuizCompletion();
         }
     }
-
+    
     private void HandleQuizCompletion()
     {
-        throw new NotImplementedException();
+        // Display Results screen
+        SceneManager.LoadScene("Results Screen");
+        // That screen should provide a method to go back to the main screen (or the game choice screen?)
+    }
+
+    public void HandleAnswer()
+    {
+        if (String.Compare(_moveField.text, _correctName, CultureInfo.CurrentCulture, CompareOptions.IgnoreNonSpace | CompareOptions.IgnoreCase) == 0)
+        {
+            ShowWinText();
+
+            // Increment score
+            _scoreHolder.correctAnswers++;
+        }
+        else
+        {
+            ShowLoseText();
+        }
+    }
+
+    void ShowWinText()
+    {
+        _winText.gameObject.SetActive(true);
+        Sequence winSequence = DOTween.Sequence();
+        winSequence.Append(_winText.transform.DOScale(1, 1f));
+        winSequence.AppendInterval(0.5f);
+        winSequence.Append(_winText.transform.DOScale(0, 1f));
+        winSequence.AppendCallback(() => { _winText.gameObject.SetActive(false); LoadNextMovement(); });
+    }
+
+    void ShowLoseText()
+    {
+        _loseText.gameObject.SetActive(true);
+        Sequence loseSequence = DOTween.Sequence();
+        loseSequence.Append(_loseText.transform.DOScale(1, 1f));
+        loseSequence.AppendInterval(0.5f);
+        loseSequence.Append(_loseText.transform.DOScale(0, 1f));
+        loseSequence.AppendCallback(() => { _winText.gameObject.SetActive(false); LoadNextMovement(); });
     }
 
     private void HandleMovement(MoveEntry moveEntry)
@@ -93,6 +171,8 @@ public class MovementQuizManager : MonoBehaviour
         {
             moveNames[Random.Range(0, _randomNameCount)] = _correctName;
         }
+        _movesText.text = string.Join("\n", moveNames);
+        _moveField.text = "";
     }
 
     void OnDisable()

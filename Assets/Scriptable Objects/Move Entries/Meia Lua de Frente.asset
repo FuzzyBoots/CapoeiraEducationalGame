@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d3cfda870b2bfb242be56c21219e76a1, type: 3}
-  m_Name: Rasteira 2
+  m_Name: Meia Lua de Frente
   m_EditorClassIdentifier: 
-  _moveAnimation: {fileID: -203655887218126122, guid: 5af7d6a8a13adb04dba0d7d103319756, type: 3}
-  _moveName: Rasteira
+  _moveAnimation: {fileID: -203655887218126122, guid: 470d397a6be4b8942bb1d981e28942f8, type: 3}
+  _moveName: Meia Lua de Frente
