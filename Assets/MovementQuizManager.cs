@@ -124,6 +124,8 @@ public class MovementQuizManager : MonoBehaviour
         // Display Results screen
         SceneManager.LoadScene("Results Screen");
         // That screen should provide a method to go back to the main screen (or the game choice screen?)
+
+        ProfileManager.Instance.SetBestMoveIdentityQuizGameScore(_scoreHolder.correctAnswers / _scoreHolder.totalQuestions);
     }
 
     public void HandleAnswer()

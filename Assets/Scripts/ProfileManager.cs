@@ -5,6 +5,10 @@ using UnityEngine;
 public class ProfileManager : MonoBehaviour
 {
     [SerializeField] List<string> _profiles;
+    private const string HISTORY_BEST_SCORE_FORMAT_STRING = "{profile}HistoryQuizGameBestScore";
+    private const string MOVE_BEST_SCORE_FORMAT_STRING = "{profile}MovementQuizGameBestScore";
+    private const string PUZZLE_BEST_SCORE_FORMAT_STRING = "{profile}PuzzleGameBestScore";
+    private const string RHYTHM_BEST_SCORE_FORMAT_STRING = "{profile}RhythmGameBestScore";
 
     public static ProfileManager Instance
     {
@@ -46,8 +50,8 @@ public class ProfileManager : MonoBehaviour
         }
         else
         {
-            PlayerPrefs.SetString("Profiles", "");
-            return new List<string>();
+            AddNewProfile("Default");
+            return new List<string> { "Default"};
         }
     }
 
@@ -56,9 +60,49 @@ public class ProfileManager : MonoBehaviour
         _profiles.Add(profile);
         PlayerPrefs.SetString($"Profiles", string.Join(",", _profiles));
 
-        PlayerPrefs.SetInt($"{profile}RhythmGamesPlayed", 0);
-        PlayerPrefs.SetInt($"{profile}PuzzleGamesPlayed", 0);
-        PlayerPrefs.SetInt($"{profile}HistoryQuizGamesPlayed", 0);
-        PlayerPrefs.SetInt($"{profile}MoveIdentityGamesPlayed", 0);
+        //PlayerPrefs.SetInt($"{profile}RhythmGamesPlayed", 0);
+        //PlayerPrefs.SetInt($"{profile}PuzzleGamesPlayed", 0);
+        //PlayerPrefs.SetInt($"{profile}HistoryQuizGamesPlayed", 0);
+        //PlayerPrefs.SetInt($"{profile}MoveIdentityGamesPlayed", 0);
+        SetBestRhythmGameScore(profile, 0);
+        SetBestPuzzleGameScore(profile, 0);
+        SetBestHistoryQuizGameScore(profile, 0);
+        SetBestMoveIdentityQuizGameScore(profile, 0);
+    }
+
+    public void SetBestMoveIdentityQuizGameScore(string profile, int score)
+    {
+        float curValue = PlayerPrefs.GetFloat(String.Format(MOVE_BEST_SCORE_FORMAT_STRING, profile), 0);
+        if (score > curValue)
+        {
+            PlayerPrefs.SetFloat(String.Format(MOVE_BEST_SCORE_FORMAT_STRING, profile), score);
+        }
+    }
+
+    public void SetBestHistoryQuizGameScore(string profile, int score)
+    {
+        float curValue = PlayerPrefs.GetFloat(String.Format(HISTORY_BEST_SCORE_FORMAT_STRING, profile), 0);
+        if (score > curValue)
+        {
+            PlayerPrefs.SetFloat(String.Format(HISTORY_BEST_SCORE_FORMAT_STRING, profile), score);
+        }
+    }
+
+    public void SetBestPuzzleGameScore(string profile, int score)
+    {
+        float curValue = PlayerPrefs.GetFloat(String.Format(PUZZLE_BEST_SCORE_FORMAT_STRING, profile), 0);
+        if (score < curValue)
+        {
+            PlayerPrefs.SetFloat(String.Format(PUZZLE_BEST_SCORE_FORMAT_STRING, profile), score);
+        }
+    }
+
+    public void SetBestRhythmGameScore(string profile, int score)
+    {
+        float curValue = PlayerPrefs.GetFloat(String.Format(RHYTHM_BEST_SCORE_FORMAT_STRING, profile), 0);
+        if (score > curValue)
+        {
+            PlayerPrefs.SetFloat(String.Format(RHYTHM_BEST_SCORE_FORMAT_STRING, profile), score);
+        }
     }
 }

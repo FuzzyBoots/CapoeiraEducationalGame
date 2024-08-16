@@ -147,17 +147,6 @@ public class QuizManager : MonoBehaviour
         loseSequence.AppendCallback(() => { _winText.gameObject.SetActive(false); LoadNextQuestion(); });
     }
 
-    public float UpdateQuestionAnswerCount(string playerProfileName, int _questions, int _correctAnswers)
-    {
-        int totalQuestions = PlayerPrefs.GetInt(playerProfileName + "totalQuestions");
-        int totalAnsweredRight= PlayerPrefs.GetInt(playerProfileName + "totalAnsweredRight");
-
-        totalQuestions += _questions;
-        totalAnsweredRight += _correctAnswers;
-
-        return totalAnsweredRight / totalQuestions;
-    }
-
     private void HandleQuizCompletion()
     {
         // Display Results screen
