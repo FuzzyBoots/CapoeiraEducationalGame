@@ -29,15 +29,15 @@ public class SceneLoader : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _buildScenes = new List<string>();
-        int numScenes = SceneManager.sceneCountInBuildSettings;
-        Debug.Log($"{numScenes} scenes");
-        for (int i = 0; i < numScenes; i++)
-        {
-            string sceneName = SceneManager.GetSceneByBuildIndex(i).name;
-            _buildScenes.Add(sceneName);
-            Debug.Log($"Added {sceneName}");
-        }
+        //_buildScenes = new List<string>();
+        //int numScenes = SceneManager.sceneCountInBuildSettings;
+        //Debug.Log($"{numScenes} scenes");
+        //for (int i = 0; i < numScenes; i++)
+        //{
+        //    string sceneName = SceneManager.GetSceneByBuildIndex(i).name;
+        //    _buildScenes.Add(sceneName);
+        //    Debug.Log($"Added {sceneName}");
+        //}
     }
 
     public bool LoadScene(string name)
@@ -56,6 +56,8 @@ public class SceneLoader : MonoBehaviour
 
     static public void LoadSceneAbs(string name)
     {
-        Instance.LoadScene(name);
+        // Instance.LoadScene(name);
+        SceneManager.LoadScene(name);
+
     }
 }
