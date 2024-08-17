@@ -29,7 +29,7 @@ public class SceneLoader : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //_buildScenes = new List<string>();
+        _buildScenes = new List<string>();
         //int numScenes = SceneManager.sceneCountInBuildSettings;
         //Debug.Log($"{numScenes} scenes");
         //for (int i = 0; i < numScenes; i++)
@@ -40,24 +40,22 @@ public class SceneLoader : MonoBehaviour
         //}
     }
 
-    public bool LoadScene(string name)
+    public void LoadScene(string name)
     {
         if (_buildScenes.Contains(name))
         {
             SceneManager.LoadScene(name);
-            return true;
+            return;
         } else
         {
             Debug.Log($"Could not find in {_buildScenes}");
-            LoadScene(name);
-            return false;
+            SceneManager.LoadScene(name);
+            return;
         }
     }
 
-    static public void LoadSceneAbs(string name)
+    public void LoadSceneAbs(string name)
     {
-        // Instance.LoadScene(name);
         SceneManager.LoadScene(name);
-
     }
 }

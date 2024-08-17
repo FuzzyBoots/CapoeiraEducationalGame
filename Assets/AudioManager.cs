@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(AudioSource))]
 public class AudioManager : MonoBehaviour
@@ -12,7 +14,14 @@ public class AudioManager : MonoBehaviour
         private set;
     }
 
-private void Awake()
+    public static GameObject createGameObject()
+    {
+        var obj = new GameObject("Audio Manager");
+        obj.AddComponent<AudioManager>();
+        return obj;
+    }
+
+    private void Awake()
     {
         // If there is an instance, and it's not me, delete myself.
         if (Instance != null && Instance != this)
@@ -22,8 +31,13 @@ private void Awake()
         else
         {
             Instance = this;
-            // DontDestroyOnLoad(this);
+            DontDestroyOnLoad(gameObject);
         }
+    }
+
+    private void SceneManager_sceneLoaded(Scene arg0, LoadSceneMode arg1)
+    {
+        throw new System.NotImplementedException();
     }
 
     public void PlayClip(AudioClip clip)
