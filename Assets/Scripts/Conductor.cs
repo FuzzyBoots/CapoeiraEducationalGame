@@ -23,6 +23,10 @@ public class Conductor : MonoBehaviour
     //an AudioSource attached to this GameObject that will play the music.
     [SerializeField] AudioSource _musicSource;
 
+    [SerializeField] List<float> _openNoteBeats;
+    [SerializeField] List<float> _closedNoteBeats;
+    [SerializeField] List<float> _buzzNoteBeats;
+
     // Start is called before the first frame update
     void Start()
     {
