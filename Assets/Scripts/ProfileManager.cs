@@ -70,6 +70,11 @@ public class ProfileManager : MonoBehaviour
         SetBestMoveIdentityQuizGameScore(profile, 0);
     }
 
+    private void SetCurrentProfile(string  profile)
+    {
+
+    }
+
     public void SetBestMoveIdentityQuizGameScore(string profile, int score)
     {
         float curValue = PlayerPrefs.GetFloat(String.Format(MOVE_BEST_SCORE_FORMAT_STRING, profile), 0);
