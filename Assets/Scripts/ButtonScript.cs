@@ -1,38 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
+using UnityEngine.SceneManagement;
 
 public class ButtonScript : MonoBehaviour
 {
-    [SerializeField] static AudioManager _audioManager;
+    [SerializeField] AudioClip _clickSound;
 
-    private AudioManager audioManager { 
-        get {
-            if (_audioManager == null)
-            {
-                _audioManager = GameObject.FindObjectOfType<AudioManager>();
-                if (_audioManager == null ) {
-                    GameObject obj = AudioManager.createGameObject();
-                    _audioManager = obj.GetComponent<AudioManager>();
-                }
-            }
-            return _audioManager; } }
-
-
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (_clickSound == null)
+        {
+            Debug.LogError("No button click sound assigned", this);
+        }
     }
 
     public void PlayClickSound()
     {
-        audioManager.PlayClip(_clickSound);
+        Debug.Log("Playing?");
+        AudioManager.Instance.PlayClip(_clickSound);
+    }
+
+    public void LoadScene(string sceneName)
+    {
+        SceneLoader.Instance.LoadScene(sceneName);
     }
 }
