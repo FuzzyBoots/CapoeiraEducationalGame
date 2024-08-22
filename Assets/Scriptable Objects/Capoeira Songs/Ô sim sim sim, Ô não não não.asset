@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb5716757babac444a8b0ecbbff80559, type: 3}
+  m_Name: "\xD4 sim sim sim, \xD4 n\xE3o n\xE3o n\xE3o"
+  m_EditorClassIdentifier: 
+  _songTitle: "\xD4 sim sim sim, \xD4 n\xE3o n\xE3o n\xE3o"
+  _songLines:
+  - _portugueseLine: "\xF4 sim, sim, sim"
+    _translations:
+    - Oh, yes, yes, yes
+    - Oh, high, high, high
+    - Where, go, go, go
+    - Yes, fight, fight, fight
+  - _portugueseLine: "\xF4 n\xE3o, n\xE3o, n\xE3o"
+    _translations:
+    - Oh, no, no, no
+    - Yes, low, low, low
+    - Where, come, come, come
+    - No, die, die, die
+  - _portugueseLine: "Mas hoje tem, amanah\xE3 n\xE3o"
+    _translations:
+    - "Today you have, tomorrow you don\u2019t"
+    - Now, go high and now go low
+    - Go to the corner store
+    - Today, you're going to die
+  - _portugueseLine: "\xF4 sim, sim, sim"
+    _translations:
+    - Oh, yes, yes, yes
+    - Oh, high, high, high
+    - Where, go, go, go
+    - Yes, fight, fight, fight
+  - _portugueseLine: "\xF4 n\xE3o, n\xE3o, n\xE3o"
+    _translations:
+    - Oh, no, no, no
+    - Yes, low, low, low
+    - Where, come, come, come
+    - No, die, die, die
+  - _portugueseLine: "Olha a pisada de lampi\xE3o"
+    _translations:
+    - Watch the steps in the lamp light
+    - Fight high, fight low, fight how you like
+    - Buy me some smokes while you're there
+    - Perhaps you will see heaven
+  - _portugueseLine: "\xF4 sim, sim, sim"
+    _translations:
+    - Oh, yes, yes, yes
+    - Oh, high, high, high
+    - Where, go, go, go
+    - Yes, fight, fight, fight
+  - _portugueseLine: "\xF4 n\xE3o, n\xE3o, n\xE3o"
+    _translations:
+    - Oh, no, no, no
+    - Yes, low, low, low
+    - Where, come, come, come
+    - No, die, die, die
