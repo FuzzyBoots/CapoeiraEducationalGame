@@ -1961,6 +1961,17 @@ MonoBehaviour:
   _songPositionInBeats: 0
   _dspSongTime: 0
   _musicSource: {fileID: 1620545405}
+  _openNoteBeats:
+  - 1
+  - 5
+  _closedNoteBeats:
+  - 2
+  - 6
+  _buzzNoteBeats:
+  - 0.5
+  - 1
+  - 4.5
+  - 5
 --- !u!4 &1620545404
 Transform:
   m_ObjectHideFlags: 0
