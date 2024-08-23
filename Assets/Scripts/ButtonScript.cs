@@ -12,18 +12,12 @@ public class ButtonScript : MonoBehaviour
     {
         if (_clickSound == null)
         {
-            Debug.LogError("No button click sound assigned", this);
+            Debug.LogWarning("No button click sound assigned", this);
         }
     }
 
     public void PlayClickSound()
     {
-        Debug.Log("Playing?");
         AudioManager.Instance.PlayClip(_clickSound);
-    }
-
-    public void LoadScene(string sceneName)
-    {
-        SceneLoader.Instance.LoadScene(sceneName);
     }
 }

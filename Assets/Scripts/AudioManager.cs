@@ -11,7 +11,7 @@ public class AudioManager : MonoBehaviour
 {
     [SerializeField] private AudioSource _audioSourceMusic;
     [SerializeField] private AudioSource _audioSourceSFX;
-    [SerializeField] private AudioMixer _audioMixerMusic;
+    [SerializeField] private AudioMixer _audioMixer;
 
     public static AudioManager Instance
     {
@@ -21,6 +21,7 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log("Audio Manager Awake on " + SceneManager.GetActiveScene().name);
         // If there is an instance, and it's not me, delete myself.
         if (Instance != null && Instance != this)
         {
@@ -29,6 +30,7 @@ public class AudioManager : MonoBehaviour
         else
         {
             Instance = this;
+            _audioSourceMusic.Play();
             DontDestroyOnLoad(gameObject);
         }
     }
@@ -51,11 +53,11 @@ public class AudioManager : MonoBehaviour
 
     public void SetMusicVolume(float value)
     {
-        _audioMixerMusic.SetFloat("MusicVolume", Mathf.Log10(value) * 20f);
+        _audioMixer.SetFloat("MusicVolume", Mathf.Log10(value) * 20f);
     }
 
     public void SetSFXVolume(float value)
     {
-        _audioMixerMusic.SetFloat("SFXVolume", Mathf.Log10(value) * 20f);
+        _audioMixer.SetFloat("SFXVolume", Mathf.Log10(value) * 20f);
     }
 }

@@ -20,45 +20,57 @@ MonoBehaviour:
     - Oh, high, high, high
     - Where, go, go, go
     - Yes, fight, fight, fight
+    _listTranslations:
+    - Oh, yes, yes, yes
+    - Oh, high, high, high
+    - Where, go, go, go
+    - Yes, fight, fight, fight
   - _portugueseLine: "\xF4 n\xE3o, n\xE3o, n\xE3o"
     _translations:
     - Oh, no, no, no
     - Yes, low, low, low
     - Where, come, come, come
     - No, die, die, die
+    _listTranslations: []
   - _portugueseLine: "Mas hoje tem, amanah\xE3 n\xE3o"
     _translations:
     - "Today you have, tomorrow you don\u2019t"
     - Now, go high and now go low
     - Go to the corner store
     - Today, you're going to die
+    _listTranslations: []
   - _portugueseLine: "\xF4 sim, sim, sim"
     _translations:
     - Oh, yes, yes, yes
     - Oh, high, high, high
     - Where, go, go, go
     - Yes, fight, fight, fight
+    _listTranslations: []
   - _portugueseLine: "\xF4 n\xE3o, n\xE3o, n\xE3o"
     _translations:
     - Oh, no, no, no
     - Yes, low, low, low
     - Where, come, come, come
     - No, die, die, die
+    _listTranslations: []
   - _portugueseLine: "Olha a pisada de lampi\xE3o"
     _translations:
     - Watch the steps in the lamp light
     - Fight high, fight low, fight how you like
     - Buy me some smokes while you're there
     - Perhaps you will see heaven
+    _listTranslations: []
   - _portugueseLine: "\xF4 sim, sim, sim"
     _translations:
     - Oh, yes, yes, yes
     - Oh, high, high, high
     - Where, go, go, go
     - Yes, fight, fight, fight
+    _listTranslations: []
   - _portugueseLine: "\xF4 n\xE3o, n\xE3o, n\xE3o"
     _translations:
     - Oh, no, no, no
     - Yes, low, low, low
     - Where, come, come, come
     - No, die, die, die
+    _listTranslations: []
