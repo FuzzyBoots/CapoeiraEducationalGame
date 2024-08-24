@@ -20,4 +20,9 @@ public class ButtonScript : MonoBehaviour
     {
         AudioManager.Instance.PlayClip(_clickSound);
     }
+
+    public void LoadScene(string sceneName)
+    {
+        SceneLoader.Instance.LoadScene(sceneName);
+    }
 }

@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/BerimbauGame.unity
     guid: 21305f504f9f8a14d84df4829e2d31fc
   - enabled: 1
@@ -17,7 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ProfilesScreen.unity
     guid: 34141315be60bd94899bcd031cddeb05
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/PuzzleScreen.unity
     guid: 36c39ffa853c3e444a2a0c03721d34f5
   - enabled: 1
@@ -32,4 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Results Screen.unity
     guid: 8db85ab4eac218f4e8b1c5f485d04408
+  - enabled: 1
+    path: Assets/Scenes/CapoeiraSongTranslationGame.unity
+    guid: c485fe8b2ffed384995c3ecdbba16fcd
   m_configObjects: {}

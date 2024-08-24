@@ -20,6 +20,12 @@ public class LyricObject : MonoBehaviour
         _correctAnswer = translations[0];
 
         UtilityFunctions.ShuffleList(translations);
+        _translations.ClearOptions();
         _translations.AddOptions(translations);
+    }
+
+    public bool IsCorrect()
+    {
+        return _translations.captionText.text == _correctAnswer;
     }
 }
