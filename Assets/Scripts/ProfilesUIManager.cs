@@ -34,27 +34,25 @@ public class ProfilesUIManager : MonoBehaviour
         }
     }
 
-    private void AddProfileUIObject(string profile)
+    private void AddProfileUIObject(string profile, bool isNew = false)
     {
         Profile profileObj = Instantiate(_profilePrefab, _profileBox.transform);
-        profileObj.setProfileName(profile);
+        
+        if (isNew)
+        {
+            Debug.Log("New Profile");
+            profileObj.SetNewProfile();
+        } else
+        {
+            profileObj.SetName(profile);
+        }
     }
 
     public void AddProfile()
     {
-        string[] randomNames = {"Macaco Branco", "Mestre Doutor", "Mestre Errado", "Kilroy", "Bob" };
-
-        List<string> profiles = ProfileManager.Instance.GetProfiles();
-        while (true)
-        {
-            string randomName = randomNames[UnityEngine.Random.Range(0, randomNames.Length)];
-            if (!profiles.Contains(randomName))
-            {
-                ProfileManager.Instance.AddNewProfile(randomName);
-                AddProfileUIObject(randomName);
-                break;
-            }
-        }
+        // We need to add the new profile object, and then lock things in so that
+        // The player has to change the name.
+        AddProfileUIObject("", true);
     }
 
     // Update is called once per frame

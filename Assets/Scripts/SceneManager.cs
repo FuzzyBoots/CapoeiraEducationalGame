@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -46,7 +47,7 @@ public class SceneLoader : MonoBehaviour
             return;
         } else
         {
-            Debug.Log($"Could not find in {_buildScenes}");
+            Debug.LogWarning($"Could not find {name} in {_buildScenes.ToSeparatedString(",")}, but trying anyway.");
             SceneManager.LoadScene(name);
             return;
         }
