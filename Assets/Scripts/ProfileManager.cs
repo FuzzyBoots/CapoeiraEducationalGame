@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Experimental.AI;
@@ -9,9 +10,9 @@ public class ProfileManager : MonoBehaviour
     [SerializeField] List<string> _profiles;
     [SerializeField] ProfileObject _profileObject;
 
-    private const string HISTORY_QUIZ_BEST_SCORE = "{}HistoryQuizBestScore";
-    private const string MOVE_QUIZ_BEST_SCORE = "{}MoveQuizBestScore";
-    private const string TRANSLATION_QUIZ_BEST_SCORE = "{}TranslationQuizBestScore";
+    private const string HISTORY_QUIZ_BEST_SCORE = "{0}HistoryQuizBestScore";
+    private const string MOVE_QUIZ_BEST_SCORE = "{0}MoveQuizBestScore";
+    private const string TRANSLATION_QUIZ_BEST_SCORE = "{0}TranslationQuizBestScore";
 
     public static ProfileManager Instance
     {
@@ -29,6 +30,7 @@ public class ProfileManager : MonoBehaviour
         else
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
     }
 
@@ -36,10 +38,20 @@ public class ProfileManager : MonoBehaviour
     {
         // Fetch profile names. Add default profile if none exist.
         _profiles = GetProfiles();
-        Debug.Log(_profiles.ToCommaSeparatedString());
+        
         if (_profiles.Count < 1)
         {
             AddNewProfile("Default");
+        }
+
+
+        if (PlayerPrefs.HasKey("CurrentProfile"))
+        {
+            _profileObject.curProfile = PlayerPrefs.GetString("CurrentProfile");
+        }
+        else
+        {
+            _profileObject.curProfile = _profiles[0];
         }
     }
 
@@ -48,7 +60,7 @@ public class ProfileManager : MonoBehaviour
         if (PlayerPrefs.HasKey("Profiles"))
         {
             string curProfiles = PlayerPrefs.GetString("Profiles");
-            String[] profiles = curProfiles.Split(',');
+            String[] profiles = curProfiles.Split(',').Distinct().ToArray();
             return new List<string>(profiles);
         }
         else
@@ -60,18 +72,18 @@ public class ProfileManager : MonoBehaviour
 
     public void AddNewProfile(string profile)
     {
-        _profiles.Add(profile);
-        OutputProfileList();
+        if (!_profiles.Contains(profile))
+        {
+            _profiles.Add(profile);
+            OutputProfileList();
 
-        SetProfileInitialRecords(profile);
-        //PlayerPrefs.SetInt($"{profile}RhythmGamesPlayed", 0);
-        //PlayerPrefs.SetInt($"{profile}PuzzleGamesPlayed", 0);
-        //PlayerPrefs.SetInt($"{profile}HistoryQuizGamesPlayed", 0);
-        //PlayerPrefs.SetInt($"{profile}MoveIdentityGamesPlayed", 0);
+            SetProfileInitialRecords(profile);
+        }
     }
 
     private void SetProfileInitialRecords(string name)
     {
+        Debug.Log($"Setting initial records for {name}");
         PlayerPrefs.SetFloat(String.Format(HISTORY_QUIZ_BEST_SCORE, name), 0f);
         PlayerPrefs.SetFloat(String.Format(MOVE_QUIZ_BEST_SCORE, name), 0f);
         PlayerPrefs.SetFloat(String.Format(TRANSLATION_QUIZ_BEST_SCORE, name), 0f);
@@ -84,12 +96,55 @@ public class ProfileManager : MonoBehaviour
         PlayerPrefs.DeleteKey(String.Format(TRANSLATION_QUIZ_BEST_SCORE, name));
     }
 
+    public float GetTranslationQuizBest(string profile)
+    {
+        string key = String.Format(TRANSLATION_QUIZ_BEST_SCORE, profile);
+        if (PlayerPrefs.HasKey(key))
+        {
+            return PlayerPrefs.GetFloat(key);
+        }
+        else
+        {
+            PlayerPrefs.SetFloat(key, 0f);
+            return 0f;
+        }
+    }
+
+    public float GetHistoryQuizBest(string profile)
+    {
+        string key = String.Format(HISTORY_QUIZ_BEST_SCORE, profile);
+        if (PlayerPrefs.HasKey(key))
+        {
+            Debug.Log("Has Key");
+            return PlayerPrefs.GetFloat(key);
+        }
+        else
+        {
+            PlayerPrefs.SetFloat(key, 0f);
+            return 0f;
+        }
+    }
+
+    private static float GetMoveQuizBest(string profile)
+    {
+        string key = String.Format(MOVE_QUIZ_BEST_SCORE, profile);
+        if (PlayerPrefs.HasKey(key))
+        {
+            return PlayerPrefs.GetFloat(key);
+        }
+        else
+        {
+            PlayerPrefs.SetFloat(key, 0f);
+            return 0f;
+        }
+    }
+
     public void SetHistoryQuizScore(string profile, float score)
     {
-        float oldScore = PlayerPrefs.GetFloat(String.Format(HISTORY_QUIZ_BEST_SCORE, profile));
+        float oldScore = GetHistoryQuizBest(profile);
         if (score > oldScore)
         {
-            PlayerPrefs.SetFloat(String.Format(HISTORY_QUIZ_BEST_SCORE, name), score);
+            PlayerPrefs.SetFloat(String.Format(HISTORY_QUIZ_BEST_SCORE, profile), score);
         }
     }
 
@@ -98,27 +153,17 @@ public class ProfileManager : MonoBehaviour
         float oldScore = GetMoveQuizBest(profile);
         if (score > oldScore)
         {
-            PlayerPrefs.SetFloat(String.Format(MOVE_QUIZ_BEST_SCORE, name), score);
+            PlayerPrefs.SetFloat(String.Format(MOVE_QUIZ_BEST_SCORE, profile), score);
         }
-    }
-
-    private static float GetMoveQuizBest(string profile)
-    {
-        return PlayerPrefs.GetFloat(String.Format(MOVE_QUIZ_BEST_SCORE, profile));
     }
 
     public void SetTranslationQuizScore(string profile, float score)
     {
-        float oldScore = PlayerPrefs.GetFloat(String.Format(TRANSLATION_QUIZ_BEST_SCORE, profile));
+        float oldScore = GetTranslationQuizBest(profile);
         if (score > oldScore)
         {
-            PlayerPrefs.SetFloat(String.Format(TRANSLATION_QUIZ_BEST_SCORE, name), score);
+            PlayerPrefs.SetFloat(String.Format(TRANSLATION_QUIZ_BEST_SCORE, profile), score);
         }
-    }
-
-    public float GetHistoryQuizBest()
-    {
-        return PlayerPrefs.GetFloat(String.Format(TRANSLATION_QUIZ_BEST_SCORE, profile));
     }
 
     internal void DeleteProfile(Profile profile)
@@ -128,6 +173,7 @@ public class ProfileManager : MonoBehaviour
         {
             _profiles.Remove(name);
             OutputProfileList();
+            Destroy(profile.gameObject);
             DeleteProfileRegistryEntries(name);
         }
         else

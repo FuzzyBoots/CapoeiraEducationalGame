@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Profile: MonoBehaviour
 {
@@ -11,15 +12,29 @@ public class Profile: MonoBehaviour
     
     public void SetNewProfile()
     {
-        Debug.Log("Setting new name?");
+        ScrollRect _scrollRect = transform.GetComponentInParent<ScrollRect>();
         _profileName.gameObject.SetActive(false);
         _newName.gameObject.SetActive(true);
         _newName.Select();
     }
 
+    public void SetNewName(string name)
+    {
+        if (name.Trim().Length > 0 && 
+            !ProfileManager.Instance.GetProfiles().Contains(name))
+        {
+            _profileName.gameObject.SetActive(true);
+            _newName.gameObject.SetActive(false);
+            _profileName.text = name;
+            ProfileManager.Instance.AddNewProfile(name);
+        } else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     public void SetName(string name)
     {
-        Debug.Log($"Setting name to {name}");
         _profileName.gameObject.SetActive(true);
         _newName.gameObject.SetActive(false);
         _profileName.text = name;
@@ -37,6 +52,6 @@ public class Profile: MonoBehaviour
 
     public void SetCurrent()
     {
-        ProfileManager.SetCurrentProfile(GetName());
+        ProfileManager.Instance.SetCurrentProfile(GetName());
     }
 }

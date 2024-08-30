@@ -1,6 +1,8 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -8,6 +10,7 @@ using UnityEngine.UI;
 public class ProfilesUIManager : MonoBehaviour
 {
     [SerializeField] VerticalLayoutGroup _profileBox;
+    [SerializeField] ScrollRect _profileScrollView;
     [SerializeField] Profile _profilePrefab;
 
     // Start is called before the first frame update
@@ -26,8 +29,10 @@ public class ProfilesUIManager : MonoBehaviour
 
     private void UpdateProfileList()
     {
+        Debug.Log("Updating profile list");
         List<string> profiles = ProfileManager.Instance.GetProfiles();
-        Debug.Log(profiles);
+        Debug.Log(profiles.ToSeparatedString(", "));
+
         foreach (string profile in profiles)
         {
             AddProfileUIObject(profile);
@@ -37,27 +42,23 @@ public class ProfilesUIManager : MonoBehaviour
     private void AddProfileUIObject(string profile, bool isNew = false)
     {
         Profile profileObj = Instantiate(_profilePrefab, _profileBox.transform);
-        
+        Debug.Log($"Adding {profile} to the list. Profile Object is {profileObj}");
+
         if (isNew)
         {
             Debug.Log("New Profile");
             profileObj.SetNewProfile();
+
+            _profileScrollView.DOVerticalNormalizedPos(0f, 0.1f);
         } else
         {
+            Debug.Log("Just setting the name");
             profileObj.SetName(profile);
         }
     }
 
     public void AddProfile()
     {
-        // We need to add the new profile object, and then lock things in so that
-        // The player has to change the name.
         AddProfileUIObject("", true);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

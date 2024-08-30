@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33cb37f570abd7e4cba5265edf7e198d, type: 3}
   m_Name: ProfileObject
   m_EditorClassIdentifier: 
-  curProfile: 
+  curProfile: Mestre Errado

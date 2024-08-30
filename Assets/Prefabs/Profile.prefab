@@ -367,13 +367,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1628686319868454339}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 7144827829138414817}
+        m_TargetAssemblyTypeName: Profile, Assembly-CSharp
+        m_MethodName: Delete
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -501,13 +501,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1628686319868454339}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 7144827829138414817}
+        m_TargetAssemblyTypeName: Profile, Assembly-CSharp
+        m_MethodName: SetCurrent
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -943,7 +943,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7144827829138414817}
         m_TargetAssemblyTypeName: Profile, Assembly-CSharp
-        m_MethodName: SetName
+        m_MethodName: SetNewName
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
