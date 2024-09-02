@@ -121,6 +121,10 @@ public class MovementQuizManager : MonoBehaviour
     
     private void HandleQuizCompletion()
     {
+        string currentProfile = ProfileManager.Instance.GetCurrentProfile();
+        float historicBest = ProfileManager.Instance.GetMoveQuizBest(currentProfile);
+        ProfileManager.Instance.SetHistoryQuizScore(currentProfile, _scoreHolder.correctAnswers * 1f / _scoreHolder.totalQuestions);
+        _scoreHolder.historicHighScore = historicBest;
         // Display Results screen
         SceneManager.LoadScene("Results Screen");
         // That screen should provide a method to go back to the main screen (or the game choice screen?)

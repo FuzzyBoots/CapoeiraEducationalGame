@@ -125,7 +125,7 @@ public class ProfileManager : MonoBehaviour
         }
     }
 
-    private static float GetMoveQuizBest(string profile)
+    public float GetMoveQuizBest(string profile)
     {
         string key = String.Format(MOVE_QUIZ_BEST_SCORE, profile);
         if (PlayerPrefs.HasKey(key))
