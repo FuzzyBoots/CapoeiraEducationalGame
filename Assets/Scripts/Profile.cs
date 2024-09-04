@@ -9,6 +9,7 @@ public class Profile: MonoBehaviour
 {
     [SerializeField] TMP_Text _profileName;
     [SerializeField] TMP_InputField _newName;
+    [SerializeField] GameObject _profileHighlight;
     
     public void SetNewProfile()
     {
@@ -50,8 +51,15 @@ public class Profile: MonoBehaviour
         ProfileManager.Instance.DeleteProfile(this);
     }
 
+    public void SetHighlight(bool highlight)
+    {
+        _profileHighlight.SetActive(highlight);
+    }
+
     public void SetCurrent()
     {
+        ProfilesUIManager.Instance.DeselectCurrentProfile();
         ProfileManager.Instance.SetCurrentProfile(GetName());
+        SetHighlight(true);
     }
 }

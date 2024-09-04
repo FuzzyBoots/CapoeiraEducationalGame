@@ -189,6 +189,7 @@ public class ProfileManager : MonoBehaviour
 
     internal void SetCurrentProfile(string name)
     {
+        PlayerPrefs.SetString("CurrentProfile", name);
         _profileObject.curProfile = name;
     }
 

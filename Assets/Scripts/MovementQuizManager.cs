@@ -123,7 +123,7 @@ public class MovementQuizManager : MonoBehaviour
     {
         string currentProfile = ProfileManager.Instance.GetCurrentProfile();
         float historicBest = ProfileManager.Instance.GetMoveQuizBest(currentProfile);
-        ProfileManager.Instance.SetHistoryQuizScore(currentProfile, _scoreHolder.correctAnswers * 1f / _scoreHolder.totalQuestions);
+        ProfileManager.Instance.SetMoveQuizScore(currentProfile, _scoreHolder.correctAnswers * 1f / _scoreHolder.totalQuestions);
         _scoreHolder.historicHighScore = historicBest;
         // Display Results screen
         SceneManager.LoadScene("Results Screen");

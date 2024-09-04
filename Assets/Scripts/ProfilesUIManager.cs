@@ -13,6 +13,25 @@ public class ProfilesUIManager : MonoBehaviour
     [SerializeField] ScrollRect _profileScrollView;
     [SerializeField] Profile _profilePrefab;
 
+    public static ProfilesUIManager Instance
+    {
+        get;
+        private set;
+    }
+
+    private void Awake()
+    {
+        // If there is an instance, and it's not me, delete myself.
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -54,11 +73,25 @@ public class ProfilesUIManager : MonoBehaviour
         {
             Debug.Log("Just setting the name");
             profileObj.SetName(profile);
+            if (profile.Equals(ProfileManager.Instance.GetCurrentProfile()))
+            {
+                profileObj.SetHighlight(true);
+            }
         }
     }
 
     public void AddProfile()
     {
         AddProfileUIObject("", true);
+    }
+
+    public void DeselectCurrentProfile()
+    {
+        foreach (Profile profile in _profileBox.GetComponentsInChildren<Profile>())
+        {
+            if (profile.GetName().Equals(ProfileManager.Instance.GetCurrentProfile())) {
+                profile.SetHighlight(false);
+            }
+        }
     }
 }

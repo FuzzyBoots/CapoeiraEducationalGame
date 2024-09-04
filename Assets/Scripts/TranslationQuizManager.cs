@@ -42,7 +42,11 @@ public class TranslationQuizManager : MonoBehaviour
 
         _scoreHolder.totalQuestions = totalLines;
         _scoreHolder.correctAnswers = correctLines;
-        
+
+        string currentProfile = ProfileManager.Instance.GetCurrentProfile();
+        float historicBest = ProfileManager.Instance.GetTranslationQuizBest(currentProfile);
+        ProfileManager.Instance.SetTranslationQuizScore(currentProfile, _scoreHolder.correctAnswers * 1f / _scoreHolder.totalQuestions);
+        _scoreHolder.historicHighScore = historicBest;
         // Display Results screen
         SceneManager.LoadScene("Results Screen");
         // That screen should provide a method to go back to the main screen (or the game choice screen?)
