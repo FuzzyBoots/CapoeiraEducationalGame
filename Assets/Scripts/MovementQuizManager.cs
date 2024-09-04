@@ -5,8 +5,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using TMPro;
-using UnityEditor;
-using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Playables;
@@ -19,7 +17,7 @@ public class MovementQuizManager : MonoBehaviour
     [SerializeField] List<MoveEntry> _moveEntries;
     [SerializeField] Animator _animator;
     PlayableGraph _playableGraph;
-    [SerializeField] AnimatorController _controller;
+    [SerializeField] RuntimeAnimatorController _controller;
     List<string> _moveNames;
     IEnumerator<MoveEntry> _moveIter;
     
@@ -64,9 +62,7 @@ public class MovementQuizManager : MonoBehaviour
         Assert.IsNotNull(_controller);
         Assert.IsNotNull(_moveField);
 
-        // BuildAnimationGraph();
-
-        // Pick 10 random moves.
+        // Pick random moves.
         UtilityFunctions.ShuffleList(_moveEntries, _movementCount);
 
         // Get the unique movement names
@@ -81,29 +77,7 @@ public class MovementQuizManager : MonoBehaviour
 
         LoadNextMovement();
     }
-
-    private void BuildAnimationGraph()
-    {
-        // Experimental function to build our transition graph
-
-        // Clear it off
-        for (int i=_controller.layers.Length-1; i>=0; i--)
-        {
-            _controller.RemoveLayer(i);
-        }
-
-        _controller.AddLayer("default");
-
-        foreach (MoveEntry moveEntry in _moveEntries)
-        {
-            AnimatorState motionState = _controller.AddMotion(moveEntry.GetAnimation());
-
-            Debug.Log(moveEntry.GetName());
-        }
-
-
-    }
-
+        
     private void LoadNextMovement()
     {
         bool hasNext = _moveIter.MoveNext();

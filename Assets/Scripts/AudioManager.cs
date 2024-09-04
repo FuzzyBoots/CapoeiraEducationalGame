@@ -53,11 +53,13 @@ public class AudioManager : MonoBehaviour
 
     public void SetMusicVolume(float value)
     {
-        _audioMixer.SetFloat("MusicVolume", Mathf.Log10(value) * 20f);
+        float decibels = Mathf.Log10(value) * 20f;
+        _audioMixer.SetFloat("MusicVolume", decibels);
     }
 
     public void SetSFXVolume(float value)
     {
-        _audioMixer.SetFloat("SFXVolume", Mathf.Log10(value) * 20f);
+        float decibels = Mathf.Log10(value) * 20f;
+        _audioMixer.SetFloat("SFXVolume", decibels);
     }
 }

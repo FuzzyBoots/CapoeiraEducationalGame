@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -33,10 +32,10 @@ public class SceneLoader : MonoBehaviour
     void Start()
     {
         // All credit to https://discussions.unity.com/t/how-can-i-get-a-list-of-all-scenes-in-the-build/157377/4
-        _buildScenes = EditorBuildSettings.scenes
-            .Where(scene => scene.enabled)
-            .Select(scene => scene.path)
-            .ToList();
+        //_buildScenes = EditorBuildSettings.scenes
+        //    .Where(scene => scene.enabled)
+        //    .Select(scene => scene.path)
+        //    .ToList();
     }
 
     public void LoadScene(string name)

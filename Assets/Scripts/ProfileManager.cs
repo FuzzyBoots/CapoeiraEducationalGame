@@ -141,10 +141,17 @@ public class ProfileManager : MonoBehaviour
 
     public void SetHistoryQuizScore(string profile, float score)
     {
-        float oldScore = GetHistoryQuizBest(profile);
-        if (score > oldScore)
+        try
         {
-            PlayerPrefs.SetFloat(String.Format(HISTORY_QUIZ_BEST_SCORE, profile), score);
+            float oldScore = GetHistoryQuizBest(profile);
+            if (score > oldScore)
+            {
+                PlayerPrefs.SetFloat(String.Format(HISTORY_QUIZ_BEST_SCORE, profile), score);
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError(e.ToString());
         }
     }
 

@@ -482,17 +482,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 651512933}
   m_CullTransparentMesh: 1
---- !u!114 &662799659 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3033964820133903420, guid: 99c0c3c770c0d3a459eacb720f21cb07, type: 3}
-  m_PrefabInstance: {fileID: 1589595445}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d6c8cd7c901e7c40b1cf273808be876, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &694252534
 GameObject:
   m_ObjectHideFlags: 0
@@ -755,15 +744,15 @@ MonoBehaviour:
   m_FillRect: {fileID: 1914728}
   m_HandleRect: {fileID: 1728280553}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 100
+  m_MinValue: 0.0001
+  m_MaxValue: 2
   m_WholeNumbers: 0
-  m_Value: 50
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 662799659}
-        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+      - m_Target: {fileID: 1376425436}
+        m_TargetAssemblyTypeName: SettingsAudioManager, Assembly-CSharp
         m_MethodName: SetMusicVolume
         m_Mode: 0
         m_Arguments:
@@ -1136,6 +1125,50 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5140230718772014666, guid: bd8ad85faae274f44b2c9ca5087cc959, type: 3}
   m_PrefabInstance: {fileID: 1213578373}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1376425435
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1376425437}
+  - component: {fileID: 1376425436}
+  m_Layer: 0
+  m_Name: SettingsAudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1376425436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1376425435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f76bf1c0a36fbf242a28ab937898e532, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1376425437
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1376425435}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1390053729
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1824,15 +1857,15 @@ MonoBehaviour:
   m_FillRect: {fileID: 293193771}
   m_HandleRect: {fileID: 1201892162}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 100
+  m_MinValue: 0.0001
+  m_MaxValue: 2
   m_WholeNumbers: 0
-  m_Value: 50
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 662799659}
-        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+      - m_Target: {fileID: 1376425436}
+        m_TargetAssemblyTypeName: SettingsAudioManager, Assembly-CSharp
         m_MethodName: SetSFXVolume
         m_Mode: 0
         m_Arguments:
@@ -1851,3 +1884,4 @@ SceneRoots:
   - {fileID: 1213578373}
   - {fileID: 1589595445}
   - {fileID: 694252537}
+  - {fileID: 1376425437}
